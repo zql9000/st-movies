@@ -1,4 +1,8 @@
-﻿namespace st_movies;
+﻿using st_movies.Services;
+using st_movies.ViewModels;
+using st_movies.Views;
+
+namespace st_movies;
 
 public static class MauiProgram
 {
@@ -13,6 +17,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+		builder.Services.AddSingleton<MovieService>();
+        builder.Services.AddSingleton<MainViewModel>();
+        builder.Services.AddSingleton<MainPage>();
+
+        return builder.Build();
 	}
 }

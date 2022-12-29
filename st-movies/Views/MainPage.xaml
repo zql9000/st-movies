@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="st_movies.Views.MainPage"
+             xmlns:model="clr-namespace:st_movies.Models"
+             xmlns:viewmodel="clr-namespace:st_movies.ViewModels"
+             x:DataType="viewmodel:MainViewModel"
+             Title="{Binding Title}">
+    <VerticalStackLayout>
+        <SearchBar 
+            x:Name="searchBar"
+            Placeholder="Search"
+            SearchCommand="{Binding SearchMoviesCommand}"
+            SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"/>
+        <CollectionView
+            ItemsSource="{Binding Movies}"
+            ItemSizingStrategy="MeasureAllItems"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Movie">
+                    <Frame>
+                        <HorizontalStackLayout VerticalOptions="Center">
+                            <Image Source="{Binding thumbnail_poster_path}" />
+                            <VerticalStackLayout
+                                VerticalOptions="Center"
+                                Padding="10">
+                                <Label 
+                                    Text="{Binding title}"
+                                    FontSize="Title"
+                                    FontAttributes="Bold" />
+                                <Label
+                                    Text="{Binding release_date}"
+                                    FontSize="Micro"
+                                    TextColor="Grey" />
+                                <Label
+                                    Text="{Binding short_overview}"
+                                    FontSize="Micro"
+                                    TextColor="LightGrey" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator 
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            Color="{StaticResource Primary}" />
+    </VerticalStackLayout>
+</ContentPage>
